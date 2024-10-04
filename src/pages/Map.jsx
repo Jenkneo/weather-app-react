@@ -31,7 +31,7 @@ const MapComponent = () => {
   return (
     <StyledMapContainer>
       <h2>Карта</h2>
-      <MapContainer center={[55.751244, 37.618423]} zoom={10} scrollWheelZoom={false}>
+      <MapContainer center={[55.751244, 37.618423]} zoom={10} scrollWheelZoom={true}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
