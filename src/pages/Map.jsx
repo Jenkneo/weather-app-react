@@ -3,15 +3,31 @@ import styled from 'styled-components';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
+// Основной контейнер для карты
 const StyledMapContainer = styled.div`
   padding: 20px;
   margin-bottom: 60px;
-  height: 400px;
   width: 100%;
+  box-sizing: border-box; /* Чтобы padding корректно рассчитывался */
 
   .leaflet-container {
     width: 100%;
-    height: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* Соотношение сторон 16:9 */
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 768px) {
+    .leaflet-container {
+      padding-bottom: 75%; /* Изменение соотношения сторон для планшетов */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .leaflet-container {
+      padding-bottom: 100%; /* Соотношение 1:1 для телефонов */
+    }
   }
 `;
 
@@ -25,12 +41,12 @@ L.Icon.Default.mergeOptions({
 
 const MapComponent = () => {
   useEffect(() => {
-    // Можно добавить логику загрузки данных о загрязнениях или пожарах с API
+    // Логика для загрузки данных о загрязнениях или пожарах с API
   }, []);
 
   return (
     <StyledMapContainer>
-      <h2>Карта</h2>
+      <h2 style={{ textAlign: 'center' }}>Карта</h2>
       <MapContainer center={[55.751244, 37.618423]} zoom={10} scrollWheelZoom={true}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

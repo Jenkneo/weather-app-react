@@ -74,7 +74,7 @@ const SearchInput = styled.input`
 `;
 
 const Header = () => {
-  const { position, error } = useGeolocation();
+  const { position} = useGeolocation();
   const [city, setCity] = useState('Определение...');
 
   useEffect(() => {
