@@ -1,0 +1,20 @@
+.header-container{
+  background-color: #4caf50;
+  padding: 10px;
+  text-align: center;
+}
+
+.nav-links{
+  display: flex;
+  justify-content: space-around;
+}
+
+.link{
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
