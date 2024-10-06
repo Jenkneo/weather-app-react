@@ -1,65 +1,169 @@
-.header-container {
-  background-color: #fff;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+:root {
+  --main-bg-color: #ffffff;
+  --text-color: rgb(0, 0, 0);
+  --font-family: Arial, sans-serif;
+  --nav-link-font-size: 14px;
+  --mobile-nav-link-font-size: 24px;
+  --mobile-menu-background-color: rgba(255, 255, 255, 0.95);
+  --link-active-color: rgb(32, 174, 230);
+}
+
+
+/* Стили заголовка */
+.header {
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
+  padding: 10px 20px;
+  width: 100%;
+  top: 0;
   border-bottom: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.nav-links {
+.header-container {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.nav-link {
-  color: black;
+/* Стили логотипа */
+.logo a {
+  color: var(--text-color);
+  font-size: 24px; /* Увеличиваем размер шрифта для иконки облака */
+  text-decoration: none; /* Убираем подчеркивание */
+}
+
+.logo a.active {
+  color: var(--link-active-color);
+  font-size: 24px; /* Увеличиваем размер шрифта для иконки облака */
+  text-decoration: none; /* Убираем подчеркивание */
+}
+
+/* Стили иконки геолокации */
+.location {
+  display: flex;
+  align-items: center; /* Центрируем текст по вертикали */
+}
+
+.location button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 10px; /* Отступ справа от кнопки */
+}
+
+.location button:focus {
+  outline: none;
+}
+
+.city-name {
+  color: var(--text-color); /* Цвет текста города */
+}
+
+/* Стили навигации */
+.nav {
+  display: flex; /* Показываем навигацию по умолчанию на десктопе */
+}
+
+.nav-list {
+  list-style: none;
+  display: flex; /* Горизонтальное отображение ссылок на десктопе */
+}
+
+.nav-list li {
+  margin-left: 20px; /* Отступы между пунктами меню */
+}
+
+.nav-list li a {
+  color: var(--text-color);
   text-decoration: none;
+  font-size: var(--nav-link-font-size); /* Размер шрифта для десктопа */
+}
+
+.nav-list li a.active {
+  color: var(--link-active-color);
   font-weight: bold;
 }
 
-.nav-link.active {
-  color: red;
-}
-
-.nav-link:hover {
+.nav-list li a:hover {
   text-decoration: underline;
 }
 
-.city-text {
-  color: black;
-  font-size: 18px;
-  font-weight: bold;
+/* Стили для мобильной навигации */
+.mobile-nav {
+  position: fixed; /* Фиксируем навигацию */
+  top: 0; /* Выровнено по верхнему краю */
+  left: 0; /* Выровнено по левому краю */
+  width: 100%; /* Занимает 100% ширины */
+  height: 100%; /* Занимает 100% высоты */
+  background-color: var(--mobile-menu-background-color); /* Полупрозрачный зеленый фон */
+  transform: translateX(-100%); /* Скрываем меню с помощью трансформации */
+  transition: transform 0.3s ease; /* Плавный переход для открытия/закрытия */
+  z-index: 999; /* Поверх других элементов */
+  display: flex; /* Используем flexbox для центрирования */
+  flex-direction: column; /* Вертикальная ориентация элементов */
+  align-items: center; /* Центрируем элементы по горизонтали */
+  justify-content: center; /* Центрируем элементы по вертикали */
 }
 
-.search-input {
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  background-color: #f0f0f0;
+.mobile-nav.active {
+  transform: translateX(0); /* Показываем меню при активации */
 }
 
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 20px;
+.mobile-nav .nav-list {
+  flex-direction: column; /* Вертикальное отображение ссылок на мобильной версии */
+  width: 100%; /* Занимает 100% ширины */
+  text-align: center; /* Центрируем текст */
+}
+
+.mobile-nav .nav-list li {
+  margin: 20px 0; /* Отступы между пунктами меню */
+  font-size: var(--mobile-nav-link-font-size); /* Увеличиваем размер шрифта для мобильного меню */
+}
+
+.mobile-nav .nav-list li a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: var(--mobile-nav-link-font-size); /* Увеличиваем размер шрифта для мобильного меню */
+}
+
+.mobile-nav .nav-list li a:hover {
+  text-decoration: underline;
+}
+
+/* Стили для кнопки закрытия меню */
+.close-menu {
+  background: none; /* Без фона */
+  border: none; /* Без границы */
+  color: var(--text-color); /* Цвет текста */
+  font-size: 30px; /* Размер шрифта */
+  cursor: pointer; /* Указатель на курсор */
+  position: absolute; /* Позиционирование */
+  top: 20px; /* Отступ сверху */
+  right: 20px; /* Отступ справа */
+}
+
+.close-menu:focus {
+  outline: none; /* Убираем рамку при фокусировке */
+}
+
+/* Стили для кнопки мобильного меню */
+.menu-toggle {
+  display: none; /* Скрываем кнопку меню по умолчанию */
+}
+
+/* Адаптивные стили для мобильных экранов */
+@media (max-width: 600px) {
+  .nav {
+      display: none; /* Скрываем навигацию на мобильных устройствах */
   }
 
-  .nav-links {
-    margin-top: 10px;
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .city-text {
-    font-size: 16px;
-  }
-
-  .search-input {
-    width: 100%;
-    margin-top: 10px;
+  .menu-toggle {
+      display: block; /* Показываем кнопку меню на мобильных устройствах */
+      font-size: 24px;
+      cursor: pointer;
   }
 }
