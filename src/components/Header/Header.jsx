@@ -21,23 +21,14 @@ const Header = () => {
 
   return (
     <header className="header-container">
-      {/* Текст с названием города */}
       <div className="city-text">{city}</div>
 
-      {/* Вкладки навигации */}
       <nav className="nav-links">
-        <NavLink exact to="/" activeClassName="active" className="nav-link">
-          Главная
-        </NavLink>
-        <NavLink to="/forecast" activeClassName="active" className="nav-link">
-          Прогноз на 10 дней
-        </NavLink>
-        <NavLink to="/map" activeClassName="active" className="nav-link">
-          Карта Загрязнения
-        </NavLink>
+        <NavLink activeClassName="active" className="nav-link" exact to="/">Главная</NavLink>
+        <NavLink activeClassName="active" className="nav-link" to="/forecast">Прогноз на 10 дней</NavLink>
+        <NavLink activeClassName="active" className="nav-link" to="/map">Карта Загрязнения</NavLink>
       </nav>
 
-      {/* Поле поиска */}
       <input type="text" className="search-input" placeholder="Поиск по городам..." />
     </header>
   );
