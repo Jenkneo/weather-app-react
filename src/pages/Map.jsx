@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import { MapContainer, TileLayer, Circle, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { getAirPollutionData } from '../services/airPollution'; // Импорт функции для получения данных
 
@@ -50,6 +50,10 @@ const MapComponent = () => {
         { lat: 55.751244, lon: 37.618423 }, // Москва
         { lat: 59.934280, lon: 30.335099 }, // Санкт-Петербург
         { lat: 54.738762, lon: 55.972414 }, // Уфа
+        { lat: 69.3558, lon: 88.1883 },     // Норильск
+        { lat: 46.0044, lon: 47.4801 },     // Астрахань
+        { lat: 22.3193, lon: 114.1694 },    // Гонконг
+        { lat: 28.6139, lon: 77.2090 },     // Нью-Дели
       ];
       
       const dataPromises = coordinates.map(async (coord) => {
@@ -83,7 +87,7 @@ const MapComponent = () => {
 
   return (
     <StyledMapContainer>
-      <h2 style={{ textAlign: 'center' }}>Карта</h2>
+      <h2 style={{ textAlign: 'center' }}>Карта загрязнения воздуха</h2>
       <MapContainer center={[55.751244, 37.618423]} zoom={5} scrollWheelZoom={true}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -95,12 +99,37 @@ const MapComponent = () => {
             center={[data.lat, data.lon]}
             radius={10000} // Радиус круга
             pathOptions={{ color: getColor(data.aqi) }}
-            eventHandlers={{
-              click: () => {
-                alert(`Регион: ${data.lat}, ${data.lon}\nAQI: ${data.aqi}\nКомпоненты: ${JSON.stringify(data.components)}`);
-              },
-            }}
-          />
+          >
+            <Marker position={[data.lat, data.lon]}>
+              <Popup>
+                <div>
+                  <h4>Информация о загрязнении</h4>
+                  <p>Координаты: {data.lat}, {data.lon}</p>
+                  <p>AQI: {data.aqi}</p>
+                  <p>CO: {data.components.co} µg/m³</p>
+                  <p>NO2: {data.components.no2} µg/m³</p>
+                  <p>O3: {data.components.o3} µg/m³</p>
+                  <p>SO2: {data.components.so2} µg/m³</p>
+                  <p>PM10: {data.components.pm10} µg/m³</p>
+                  <p>PM2.5: {data.components.pm2_5} µg/m³</p>
+                </div>
+              </Popup>
+            </Marker>
+            {/* Отображение текста AQI на круге */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '16px',
+              }}
+            >
+              {data.aqi}
+            </div>
+          </Circle>
         ))}
       </MapContainer>
     </StyledMapContainer>
