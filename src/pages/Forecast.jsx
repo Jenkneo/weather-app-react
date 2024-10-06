@@ -8,6 +8,23 @@ const ForecastContainer = styled.div`
   margin-bottom: 60px;
 `;
 
+const healthRecommendations = (aqi) => {
+  switch (aqi) {
+    case 1:
+      return "Качество воздуха хорошо. Можно заниматься активными делами на улице.";
+    case 2:
+      return "Умеренное загрязнение. Для людей с повышенной чувствительностью могут быть проблемы.";
+    case 3:
+      return "Загрязнение вредно для групп с повышенной чувствительностью.";
+    case 4:
+      return "Высокое загрязнение. Возможно влияние на здоровье людей.";
+    case 5:
+      return "Качество воздуха крайне плохое. Нужно избегать длительного пребывания на улице.";
+    default:
+      return "Нет данных о качестве воздуха.";
+  }
+};
+
 const Forecast = () => {
   const { position, error } = useGeolocation();
   const [forecastData, setForecastData] = useState(null);
@@ -32,9 +49,10 @@ const Forecast = () => {
         forecastData ? (
           forecastData.list.map((item, index) => (
             <div key={index}>
-              <p>Дата: {new Date(item.dt * 1000).toLocaleDateString()}</p>
+              <p>Дата и время: {new Date(item.dt * 1000).toLocaleString()}</p>
               <p>Индекс качества воздуха: {item.main.aqi}</p>
               <p>CO: {item.components.co}, NO2: {item.components.no2}</p>
+              <p>Рекомендации: {healthRecommendations(item.main.aqi)}</p>
             </div>
           ))
         ) : (
