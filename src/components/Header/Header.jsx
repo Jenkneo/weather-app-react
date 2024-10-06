@@ -1,81 +1,40 @@
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import './Header.css';
 import useGeolocation from '../../hooks/useGeolocation';
 import { getCityName } from '../../services/geocoding';
 
-// Основной контейнер хедера
-const HeaderContainer = styled.header`
-  background-color: #fff; /* Изменено на белый */
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #ccc; /* Добавлена граница для разделения */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 20px;
-  }
-`;
-
-// Контейнер для вкладок (Прогноз и Карта осадков)
-const NavLinks = styled.nav`
-  display: flex;
-  gap: 20px;
-
-  @media (max-width: 768px) {
-    margin-top: 10px;
-    width: 100%;
-    justify-content: space-between;
-  }
-`;
-
-// Стили для каждой ссылки, включая активное состояние
-const StyledNavLink = styled(NavLink)`
-  color: black; /* Сделаем текст черным */
-  text-decoration: none;
-  font-weight: bold;
-
-  &.active {
-    color: red; /* Активная ссылка выделяется красным цветом */
-  }
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-// Стили для текстового блока с городом
-const CityText = styled.div`
-  color: black; /* Сделаем текст черным */
-  font-size: 18px;
-  font-weight: bold;
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-`;
-
-// Стили для поля поиска
-const SearchInput = styled.input`
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  background-color: #f0f0f0; /* Сделаем фон серым */
-
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-top: 10px;
-  }
-`;
-
 const Header = () => {
-  const { position} = useGeolocation();
+  const [isMobileNavActive, setIsMobileNavActive] = useState(false);
+
+  const { position } = useGeolocation();
   const [city, setCity] = useState('Определение...');
+
+  // Обработчик открытия/закрытия мобильного меню
+  const toggleMobileNav = () => {
+    setIsMobileNavActive(!isMobileNavActive);
+  };
+
+  // Обработчик закрытия мобильного меню
+  const closeMobileNav = () => {
+    setIsMobileNavActive(false);
+  };
+
+  // Обработчик изменения размера окна
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 600) {
+        setIsMobileNavActive(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Очистка обработчика при размонтировании компонента
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchCity = async () => {
@@ -88,27 +47,86 @@ const Header = () => {
     fetchCity();
   }, [position]);
 
+  // Обработчик кнопки геолокации
+  const handleGeolocation = () => {
+    alert('Пока что ручной ввод города не поддерживается...');
+  };
+
   return (
-  <HeaderContainer>
-    {/* Текст с названием города */}
-    <CityText>{city}</CityText>
+    <>
+      <header className="header">
+        <div className="header-container">
+          <div className="logo">
+            <NavLink activeClassName="active" className="nav-link" to="/">
+              <i className="fa-solid fa-cloud"></i>
+            </NavLink>
+          </div>
+          <div className="location">
+            <button
+              id="geolocation-btn"
+              aria-label="Определить местоположение"
+              onClick={handleGeolocation}
+            >
+              <i className="fas fa-map-marker-alt"></i>
+            </button>
+            <span className="city-name">{city}</span>
+          </div>
+          <nav className="nav">
+            <ul className="nav-list">
+              <li>
+                <NavLink activeClassName="active" className="nav-link" to="/forecast">Прогноз</NavLink>
+              </li>
+              <li>
+                <NavLink activeClassName="active" className="nav-link" to="/map">Карта</NavLink>
+              </li>
+              <li>
+                <NavLink activeClassName="active" className="nav-link" to="/news">Новости</NavLink>
+              </li>
+              <li>
+                <NavLink activeClassName="active" className="nav-link" to="/notifications">Уведомления</NavLink>
+              </li>
+              <li>
+                <NavLink activeClassName="active" className="nav-link" to="/safe-levels">Нормы</NavLink>
+              </li>
+            </ul>
+          </nav>
+          <div
+            className="menu-toggle"
+            id="mobile-menu"
+            aria-label="Открыть меню"
+            onClick={toggleMobileNav}
+          >
+            <i className="fas fa-bars"></i>
+          </div>
+        </div>
+      </header>
 
-    {/* Вкладки навигации */}
-    <NavLinks>
-      <StyledNavLink exact to="/" activeClassName="active">
-        Главная
-      </StyledNavLink>
-      <StyledNavLink to="/forecast" activeClassName="active">
-        Прогноз на 10 дней
-      </StyledNavLink>
-      <StyledNavLink to="/map" activeClassName="active">
-        Карта Загрязнения
-      </StyledNavLink>
-    </NavLinks>
-
-    {/* Поле поиска */}
-    <SearchInput type="text" placeholder="Поиск по городам..." />
-  </HeaderContainer>
+      <nav className={`mobile-nav ${isMobileNavActive ? 'active' : ''}`}>
+        <button className="close-menu" aria-label="Закрыть меню" onClick={closeMobileNav}>
+          <i className="fas fa-times"></i>
+        </button>
+        <ul className="nav-list">
+        <li>
+            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/">Главная</NavLink>
+          </li>
+          <li>
+            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/forecast">Прогноз</NavLink>
+          </li>
+          <li>
+            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/map">Карта</NavLink>
+          </li>
+          <li>
+            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/news">Новости</NavLink>
+          </li>
+          <li>
+            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/notifications">Уведомления</NavLink>
+          </li>
+          <li>
+            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/safe-levels">Нормы</NavLink>
+          </li>
+        </ul>
+      </nav>
+    </>
   );
 };
 
