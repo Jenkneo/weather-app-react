@@ -6,9 +6,26 @@ import { getAirPollutionForecast } from '../services/airPollution';
 const ForecastContainer = styled.div`
   padding: 20px;
   margin-bottom: 60px;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 `;
 
-const healthRecommendations = (aqi) => {
+const Title = styled.h2`
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+`;
+
+const ForecastCard = styled.div`
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const HealthRecommendations = (aqi) => {
   switch (aqi) {
     case 1:
       return "Качество воздуха хорошо. Можно заниматься активными делами на улице.";
@@ -42,18 +59,23 @@ const Forecast = () => {
 
   return (
     <ForecastContainer>
-      <h2>Прогноз загрязнения воздуха на 5 дней</h2>
+      <Title>Прогноз загрязнения воздуха на 5 дней</Title>
       {error ? (
         <p>Ошибка определения местоположения: {error}</p>
       ) : (
         forecastData ? (
           forecastData.list.map((item, index) => (
-            <div key={index}>
+            <ForecastCard key={index}>
               <p>Дата и время: {new Date(item.dt * 1000).toLocaleString()}</p>
               <p>Индекс качества воздуха: {item.main.aqi}</p>
-              <p>CO: {item.components.co}, NO2: {item.components.no2}</p>
-              <p>Рекомендации: {healthRecommendations(item.main.aqi)}</p>
-            </div>
+              <p>CO: {item.components.co} µg/m³</p>
+              <p>NO2: {item.components.no2} µg/m³</p>
+              <p>O3: {item.components.o3} µg/m³</p>
+              <p>SO2: {item.components.so2} µg/m³</p>
+              <p>PM10: {item.components.pm10} µg/m³</p>
+              <p>PM2.5: {item.components.pm2_5} µg/m³</p>
+              <p>Рекомендации: {HealthRecommendations(item.main.aqi)}</p>
+            </ForecastCard>
           ))
         ) : (
           <p>Загрузка прогноза загрязнения воздуха...</p>
