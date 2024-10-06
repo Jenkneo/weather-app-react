@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useGeolocation from '../hooks/useGeolocation';
-import { getCityName } from '../services/geocoding';
+import { getAirPollutionData } from '../services/airPollution';
 
 const HomeContainer = styled.div`
   padding: 20px;
-  margin-bottom: 60px; /* Для избежания перекрытия футером */
+  margin-bottom: 60px;
 `;
 
 const Home = () => {
   const { position, error } = useGeolocation();
-  const [city, setCity] = useState('Определение...');
+  const [airData, setAirData] = useState(null);
 
   useEffect(() => {
-    const fetchCity = async () => {
+    const fetchAirData = async () => {
       if (position.lat && position.lon) {
-        const cityName = await getCityName(position.lat, position.lon);
-        setCity(cityName);
+        const data = await getAirPollutionData(position.lat, position.lon);
+        setAirData(data);
       }
     };
 
-    fetchCity();
+    fetchAirData();
   }, [position]);
 
   return (
@@ -29,9 +29,15 @@ const Home = () => {
       {error ? (
         <p>Ошибка определения местоположения: {error}</p>
       ) : (
-        <p>Текущее местоположение: {city}</p>
+        airData ? (
+          <div>
+            <p>Текущее качество воздуха: {airData.list[0].main.aqi} (AQI)</p>
+            <p>Концентрации загрязнителей: CO - {airData.list[0].components.co}, NO2 - {airData.list[0].components.no2}</p>
+          </div>
+        ) : (
+          <p>Загрузка данных о качестве воздуха...</p>
+        )
       )}
-      <p>Здесь вы можете узнать актуальную информацию о состоянии воздуха в вашем городе.</p>
     </HomeContainer>
   );
 };
