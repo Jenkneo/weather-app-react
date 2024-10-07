@@ -1,0 +1,104 @@
+:root {
+  --widget-bg-color: #1d3557;
+  --widget-text-color: white;
+  --nav-link-font-size: 14px;
+  --mobile-nav-link-font-size: 24px;
+  --mobile-menu-background-color: rgba(255, 255, 255, 0.95);
+  --link-active-color: rgb(32, 174, 230);
+}
+
+.air-quality-widget {
+  margin: 0 auto;
+  min-width: 300px;
+  max-width: 800px;
+  background: var(--widget-bg-color);
+  color: var(--widget-text-color);
+  padding: 20px;
+  border-radius: 10px;
+  font-family: var(--font-family);
+}
+
+.location-info {
+  margin-bottom: 30px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.air-quality-info {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.location-info p {
+  margin-top: 5px;
+  margin-bottom: 0px;
+  color: #a8dadc;
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.temperature {
+  font-size: 58px;
+  align-items: center;
+  text-align: center;
+}
+
+.bottom-divider {
+  margin-top: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, .3);
+}
+
+.after-divider {
+  margin-top: 20px;
+}
+
+.additional-info {
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);  /* Полупрозрачный фон */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Тень */
+}
+
+.additional-info div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  /* Разделяет текст слева и значения справа */
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.2);  /* Темный блок для каждой строки */
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.additional-info div:hover {
+  background: rgba(0, 0, 0, 0.3);  /* Hover-эффект */
+}
+
+.indicator {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.pollutant {
+  flex: 1;
+  text-align: left;
+}
+
+.value {
+  text-align: right;
+  font-weight: bold;
+}
+
+@media (max-width: 410px) {
+  .additional-info {
+    padding: 5px;
+  }
+
+  .pollutant, .value {
+    font-size: 14px;
+  }
+}
