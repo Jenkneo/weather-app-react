@@ -79,9 +79,9 @@ const Header = () => {
               <li>
                 <NavLink activeClassName="active" className="nav-link" to="/map">Карта</NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink activeClassName="active" className="nav-link" to="/news">Новости</NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink activeClassName="active" className="nav-link" to="/notifications">Уведомления</NavLink>
               </li>
@@ -115,9 +115,9 @@ const Header = () => {
           <li>
             <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/map">Карта</NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/news">Новости</NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/notifications">Уведомления</NavLink>
           </li>

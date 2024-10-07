@@ -97,7 +97,7 @@ const MapComponent = () => {
           <Circle
             key={index}
             center={[data.lat, data.lon]}
-            radius={10000} // Радиус круга
+            radius={100} // Радиус круга
             pathOptions={{ color: getColor(data.aqi) }}
           >
             <Marker position={[data.lat, data.lon]}>
