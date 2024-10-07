@@ -63,18 +63,18 @@ const SubmitButton = styled.button`
 const Notifications = () => {
   const [aqiThreshold, setAqiThreshold] = useState(3); // Порог AQI для уведомлений
   const [enableNotifications, setEnableNotifications] = useState(true); // Включены ли уведомления
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false); // Проверка на отправку формы
+  const [, setIsFormSubmitted] = useState(false); // Проверка на отправку формы
 
   const handleFormSubmit = (e) => {
     e.preventDefault(); // Предотвращаем перезагрузку страницы
     setIsFormSubmitted(true); // Отмечаем, что форма отправлена
 
     // Всплывающее уведомление при сохранении настроек
-    toast.success(
-      `Уведомления включены для AQI порога: ${aqiThreshold}. Статус: ${
-        enableNotifications ? 'Включены' : 'Отключены'
-      }`
-    );
+    if (enableNotifications) {
+      toast.success(`Уведомления включены для AQI порога: ${aqiThreshold}. Статус: Включены`);
+    } else {
+      toast.info(`Уведомления выключены для AQI порога: ${aqiThreshold}. Статус: Выключены`);
+    }
   };
 
   return (
@@ -100,7 +100,7 @@ const Notifications = () => {
             type="checkbox"
             id="enable-notifications"
             checked={enableNotifications}
-            onChange={(e) => setEnableNotifications(e.target.checked)}
+            onChange={(e) => setEnableNotifications(e.target.checked)} // Следим за изменением состояния
           />
           <CheckboxLabel htmlFor="enable-notifications">
             Включить уведомления
