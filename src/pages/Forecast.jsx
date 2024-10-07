@@ -17,12 +17,19 @@ const Title = styled.h2`
   text-align: center;
 `;
 
-const ForecastCard = styled.div`
+const DayCard = styled.div`
   background-color: #fff;
   border-radius: 8px;
   padding: 15px;
   margin: 15px 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const HourCard = styled.div`
+  background-color: #e8f0fe;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px 0;
 `;
 
 const HealthRecommendations = (aqi) => {
@@ -57,6 +64,21 @@ const Forecast = () => {
     fetchForecastData();
   }, [position]);
 
+  // Группировка данных по дням
+  const groupForecastByDay = (data) => {
+    const grouped = {};
+
+    data.forEach(item => {
+      const date = new Date(item.dt * 1000).toLocaleDateString(); // Получаем дату в формате 'YYYY-MM-DD'
+      if (!grouped[date]) {
+        grouped[date] = [];
+      }
+      grouped[date].push(item);
+    });
+
+    return grouped;
+  };
+
   return (
     <ForecastContainer>
       <Title>Прогноз загрязнения воздуха на 5 дней</Title>
@@ -64,19 +86,29 @@ const Forecast = () => {
         <p>Ошибка определения местоположения: {error}</p>
       ) : (
         forecastData ? (
-          forecastData.list.map((item, index) => (
-            <ForecastCard key={index}>
-              <p>Дата и время: {new Date(item.dt * 1000).toLocaleString()}</p>
-              <p>Индекс качества воздуха: {item.main.aqi}</p>
-              <p>CO: {item.components.co} µg/m³</p>
-              <p>NO2: {item.components.no2} µg/m³</p>
-              <p>O3: {item.components.o3} µg/m³</p>
-              <p>SO2: {item.components.so2} µg/m³</p>
-              <p>PM10: {item.components.pm10} µg/m³</p>
-              <p>PM2.5: {item.components.pm2_5} µg/m³</p>
-              <p>Рекомендации: {HealthRecommendations(item.main.aqi)}</p>
-            </ForecastCard>
-          ))
+          Object.keys(groupForecastByDay(forecastData.list)).map((date, index) => {
+            const dayItems = groupForecastByDay(forecastData.list)[date];
+            const dayOfWeek = new Date(dayItems[0].dt * 1000).toLocaleString('ru-RU', { weekday: 'long' });
+            
+            return (
+              <DayCard key={index}>
+                <h3>{dayOfWeek}, {date}</h3>
+                {dayItems.map((item, hourIndex) => (
+                  <HourCard key={hourIndex}>
+                    <p>Время: {new Date(item.dt * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                    <p>Индекс качества воздуха: {item.main.aqi}</p>
+                    <p>CO: {item.components.co} µg/m³</p>
+                    <p>NO2: {item.components.no2} µg/m³</p>
+                    <p>O3: {item.components.o3} µg/m³</p>
+                    <p>SO2: {item.components.so2} µg/m³</p>
+                    <p>PM10: {item.components.pm10} µg/m³</p>
+                    <p>PM2.5: {item.components.pm2_5} µg/m³</p>
+                    <p>Рекомендации: {HealthRecommendations(item.main.aqi)}</p>
+                  </HourCard>
+                ))}
+              </DayCard>
+            );
+          })
         ) : (
           <p>Загрузка прогноза загрязнения воздуха...</p>
         )
