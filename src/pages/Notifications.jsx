@@ -72,7 +72,7 @@ const Notifications = () => {
 
     // Всплывающее уведомление при сохранении настроек
     if (enableNotifications) {
-      toast.success(`Уведомления включены для AQI порога: ${aqiThreshold}. Статус: Включены. ${getHealthRecommendations(aqiThreshold)}`);
+      toast.success(`Уведомления включены для AQI порога: ${aqiThreshold}. Статус: Включены`);
     } else {
       toast.info(`Уведомления выключены для AQI порога: ${aqiThreshold}. Статус: Выключены`);
     }
