@@ -1,0 +1,24 @@
+/* Home.css */
+
+.home-container {
+  padding: 20px;
+  margin-bottom: 60px;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+}
+
+.title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+@media (max-width: 410px) {
+  .home-container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}

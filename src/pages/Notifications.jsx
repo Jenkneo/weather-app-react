@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getHealthRecommendations, airQualityOptions } from '../hooks/airQualityRecommendations'; 
 
 const NotificationsContainer = styled.div`
   padding: 20px;
@@ -88,11 +89,11 @@ const Notifications = () => {
           value={aqiThreshold}
           onChange={(e) => setAqiThreshold(e.target.value)}
         >
-          <option value="1">1 (Хорошо)</option>
-          <option value="2">2 (Умеренно)</option>
-          <option value="3">3 (Плохо для чувствительных групп)</option>
-          <option value="4">4 (Плохо)</option>
-          <option value="5">5 (Очень плохо)</option>
+          {airQualityOptions.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </Select>
 
         <CheckboxContainer>

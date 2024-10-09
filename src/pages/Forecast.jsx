@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useGeolocation from '../hooks/useGeolocation';
 import { getAirPollutionForecast } from '../services/airPollution';
+import { getHealthRecommendations } from '../hooks/airQualityRecommendations'; // Обновите путь
 
 const ForecastContainer = styled.div`
   padding: 20px;
@@ -31,23 +32,6 @@ const HourCard = styled.div`
   padding: 10px;
   margin: 5px 0;
 `;
-
-const HealthRecommendations = (aqi) => {
-  switch (aqi) {
-    case 1:
-      return "Качество воздуха хорошо. Можно заниматься активными делами на улице.";
-    case 2:
-      return "Умеренное загрязнение. Для людей с повышенной чувствительностью могут быть проблемы.";
-    case 3:
-      return "Загрязнение вредно для групп с повышенной чувствительностью.";
-    case 4:
-      return "Высокое загрязнение. Возможно влияние на здоровье людей.";
-    case 5:
-      return "Качество воздуха крайне плохое. Нужно избегать длительного пребывания на улице.";
-    default:
-      return "Нет данных о качестве воздуха.";
-  }
-};
 
 const Forecast = () => {
   const { position, error } = useGeolocation();
@@ -89,7 +73,7 @@ const Forecast = () => {
           Object.keys(groupForecastByDay(forecastData.list)).map((date, index) => {
             const dayItems = groupForecastByDay(forecastData.list)[date];
             const dayOfWeek = new Date(dayItems[0].dt * 1000).toLocaleString('ru-RU', { weekday: 'long' });
-            
+
             return (
               <DayCard key={index}>
                 <h3>{dayOfWeek}, {date}</h3>
@@ -103,7 +87,7 @@ const Forecast = () => {
                     <p>SO2: {item.components.so2} µg/m³</p>
                     <p>PM10: {item.components.pm10} µg/m³</p>
                     <p>PM2.5: {item.components.pm2_5} µg/m³</p>
-                    <p>Рекомендации: {HealthRecommendations(item.main.aqi)}</p>
+                    <p>Рекомендации: {getHealthRecommendations(item.main.aqi)}</p>
                   </HourCard>
                 ))}
               </DayCard>

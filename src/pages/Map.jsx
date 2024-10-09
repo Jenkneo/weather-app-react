@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MapContainer, TileLayer, Circle, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import { getAirPollutionData } from '../services/airPollution'; // Импорт функции для получения данных
+import { getAirPollutionData } from '../services/airPollution';
+import { getColor, getHealthRecommendations } from '../hooks/airQualityRecommendations';
 
 // Основной контейнер для карты
 const StyledMapContainer = styled.div`
@@ -73,18 +74,6 @@ const MapComponent = () => {
     fetchPollutionData();
   }, []);
 
-  // Функция для выбора цвета на основе уровня загрязнения
-  const getColor = (aqi) => {
-    switch (aqi) {
-      case 1: return 'green'; // Хорошо
-      case 2: return 'yellow'; // Умеренно
-      case 3: return 'orange'; // Плохо
-      case 4: return 'red'; // Очень плохо
-      case 5: return 'purple'; // Ужасно
-      default: return 'gray'; // Неизвестно
-    }
-  };
-
   return (
     <StyledMapContainer>
       <h2 style={{ textAlign: 'center' }}>Карта загрязнения воздуха</h2>
@@ -112,6 +101,7 @@ const MapComponent = () => {
                   <p>SO2: {data.components.so2} µg/m³</p>
                   <p>PM10: {data.components.pm10} µg/m³</p>
                   <p>PM2.5: {data.components.pm2_5} µg/m³</p>
+                  <p>Рекомендации: {getHealthRecommendations(data.aqi)}</p>
                 </div>
               </Popup>
             </Marker>
