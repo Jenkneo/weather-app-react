@@ -3,26 +3,21 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css'; // Импортируем CSS файл
 import useGeolocation from '../../hooks/useGeolocation';
-import { getCityName } from '../../services/geocoding'; // Импортируем функцию для получения названия города
+// import { getCityName } from '../../services/geocoding'; // Импортируем функцию для получения названия города
 import { getAirPollutionData, getAirPollutionForecast } from '../../services/airPollution'; // Импортируем обе функции
 
 import AirQuality from './AirQuality/AirQuality'; // Импортируем новый компонент
 import Forecast from './Forecast/Forecast'; // Импортируем новый компонент
 
 const Home = () => {
-  const { position, error } = useGeolocation();
+  const { position,  } = useGeolocation();
   const [airData, setAirData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
-  const [city, setCity] = useState('Определение...');
 
   useEffect(() => {
     const fetchAirData = async () => {
       if (position.lat && position.lon) {
         try {
-          // Получаем название города
-          const cityName = await getCityName(position.lat, position.lon);
-          setCity(cityName);
-
           // Получаем текущее качество воздуха
           const currentAirData = await getAirPollutionData(position.lat, position.lon);
           setAirData(currentAirData);
@@ -73,31 +68,8 @@ const Home = () => {
   return (
     <div className="home-container">
       <h2 className="title">Сегодня</h2>
-      {airData ? (
-        <AirQuality airData={airData} /> // Используем компонент AirQuality
-      ) : (
-        <p className="description">Загрузка данных о текущем качестве воздуха...</p>
-      )}
-
-      {/* {error ? (
-        <p className="description">Ошибка определения местоположения: {error}</p>
-      ) : (
-        <>
-          <p className="current-location">Текущее местоположение: {city}</p>
-
-          {airData ? (
-            <AirQuality airData={airData} /> // Используем компонент AirQuality
-          ) : (
-            <p className="description">Загрузка данных о текущем качестве воздуха...</p>
-          )}
-
-          {forecastGroupedByDay ? (
-            <Forecast forecastGroupedByDay={forecastGroupedByDay} /> // Используем компонент Forecast
-          ) : (
-            <p className="description">Загрузка прогноза на следующие сутки...</p>
-          )}
-        </>
-      )} */}
+      <AirQuality airData={airData} />
+      <Forecast forecastGroupedByDay={forecastGroupedByDay} />
     </div>
   );
 };

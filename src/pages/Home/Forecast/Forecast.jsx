@@ -1,12 +1,14 @@
-// src/components/Home/Forecast.jsx
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../Home.css'; // Импортируем стили
+import './Forecast.css';
 
 const Forecast = ({ forecastGroupedByDay }) => {
   if (!forecastGroupedByDay) {
-    return <p className="description">Данные прогноза недоступны.</p>;
+    return (
+      <div className="forecast-container">
+        <h3>Данные прогноза недоступны или все еще подгружаются....</h3>
+      </div>
+    )
   }
 
   return (
