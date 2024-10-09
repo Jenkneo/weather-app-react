@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getHealthRecommendations, airQualityOptions } from '../hooks/airQualityRecommendations'; 
+import { airQualityOptions } from '../hooks/airQualityRecommendations'; 
 
 const NotificationsContainer = styled.div`
   padding: 20px;
