@@ -1,5 +1,7 @@
 import { getCache, setCache } from '../utils/cache';
 const GEOCODING_API_KEY = 'f1ea1814ac5b4e5ab566d9c53b1a501a';
+const isDevMode = process.env.NODE_ENV === 'development'
+const BASE_URL = (isDevMode ? 'http' : 'https') + `://api.opencagedata.com/geocode/v1`
 
 // Нужно сделать, чтобы эта хуйня обращалась на бек
 export const getCityName = async (lat, lon) => {
@@ -19,7 +21,7 @@ export const getCityName = async (lat, lon) => {
 
   try {
     const response = await fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${GEOCODING_API_KEY}&language=ru&pretty=1`
+      `${BASE_URL}/json?q=${lat}+${lon}&key=${GEOCODING_API_KEY}&language=ru&pretty=1`
     );
     const data = await response.json();
     if (data.results.length > 0) {
