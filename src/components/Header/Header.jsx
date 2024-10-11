@@ -4,9 +4,11 @@ import './Header.css';
 import useGeolocation from '../../hooks/useGeolocation';
 import { getCityName } from '../../services/geocoding';
 import MobileMenu from './MobileMenu/MobileMenu';
+import CitySelector from './CitySelector/CitySelector';
 
 const Header = () => {
   const [isMobileNavActive, setIsMobileNavActive] = useState(false);
+  const [isCitySelectorActive, setIsCitySelectorActive] = useState(false);
 
   const { position } = useGeolocation();
   const [city, setCity] = useState('Определение...');
@@ -19,6 +21,14 @@ const Header = () => {
   // Обработчик закрытия мобильного меню
   const closeMobileNav = () => {
     setIsMobileNavActive(false);
+  };
+
+  const toggleCitySelector = () => {
+    setIsCitySelectorActive(!isCitySelectorActive);
+  };
+
+  const closeCitySelector = () => {
+    setIsCitySelectorActive(false);
   };
 
   // Обработчик изменения размера окна
@@ -50,7 +60,8 @@ const Header = () => {
 
   // Обработчик кнопки геолокации
   const handleGeolocation = () => {
-    alert('Пока что ручной ввод города не поддерживается...');
+    toggleCitySelector();
+    // alert('Пока что ручной ввод города не поддерживается...');
   };
 
   return (
@@ -103,6 +114,9 @@ const Header = () => {
       </header>
 
       <MobileMenu isMobileNavActive={isMobileNavActive} closeMobileNav={closeMobileNav} />
+    
+      <CitySelector isCitySelectorActive={isCitySelectorActive} closeCitySelector={closeCitySelector} />
+    
     </>
   );
 };

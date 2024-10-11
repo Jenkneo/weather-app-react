@@ -7,8 +7,6 @@
   --link-active-color: rgb(32, 174, 230);
 }
 
-
-/* Стили заголовка */
 .header {
   background-color: var(--main-bg-color);
   color: var(--text-color);
