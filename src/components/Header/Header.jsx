@@ -5,6 +5,7 @@ import useGeolocation from '../../hooks/useGeolocation';
 import { getCityName } from '../../services/geocoding';
 import MobileMenu from './MobileMenu/MobileMenu';
 import CitySelector from './CitySelector/CitySelector';
+// import logo from './logo.png';
 
 const Header = () => {
   const [isMobileNavActive, setIsMobileNavActive] = useState(false);
@@ -70,6 +71,7 @@ const Header = () => {
         <div className="header-container">
           <div className="logo">
             <NavLink activeClassName="active" className="nav-link" to="/">
+              {/* <img className='header-logo' src={logo} alt='Logo' /> */}
               <i className="fa-solid fa-cloud"></i>
             </NavLink>
           </div>

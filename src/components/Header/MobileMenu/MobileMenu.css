@@ -8,7 +8,7 @@
   background-color: var(--mobile-menu-background-color); /* Полупрозрачный зеленый фон */
   transform: translateX(-100%); /* Скрываем меню с помощью трансформации */
   transition: transform 0.3s ease; /* Плавный переход для открытия/закрытия */
-  z-index: 999; /* Поверх других элементов */
+  z-index: 1001; /* Поверх других элементов */
   display: flex; /* Используем flexbox для центрирования */
   flex-direction: column; /* Вертикальная ориентация элементов */
   align-items: center; /* Центрируем элементы по горизонтали */
