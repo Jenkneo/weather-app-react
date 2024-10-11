@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
 import { setCache, getCache } from '../utils/cache';
 
+const DEFAULT_POSITION = { lat: 46.3499, lon: 48.0368 }; // Координаты Астрахани
+
 const useGeolocation = (initialPosition = null) => {
   const [position, setPosition] = useState(initialPosition || { lat: null, lon: null });
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const cachedPosition = getCache('geolocation');
+
     if (cachedPosition) {
       setPosition(cachedPosition);
     } else {
       if (!navigator.geolocation) {
-        setError('Геолокация не поддерживается вашим браузером');
+        console.log('Геолокация не поддерживается вашим браузером, установлено значение по умолчанию.');
+        setPosition(DEFAULT_POSITION);
+        setCache('geolocation', DEFAULT_POSITION);
         return;
       }
 
@@ -26,6 +31,8 @@ const useGeolocation = (initialPosition = null) => {
 
       const failure = (err) => {
         setError(err.message);
+        setPosition(DEFAULT_POSITION);
+        setCache('geolocation', DEFAULT_POSITION);
       };
 
       navigator.geolocation.getCurrentPosition(success, failure);
