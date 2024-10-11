@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './CitySelector.css';
 import citiesData from './cities.json';
+import useGeolocation from '../../../hooks/useGeolocation';
+import { setCityName } from '../../../services/geocoding';
 
 const CitySelector = ({ isCitySelectorActive, closeCitySelector }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortedCities, setSortedCities] = useState([]);
+  const [initialPosition, setInitialPosition] = useState(null);
+  const { } = useGeolocation(initialPosition); // eslint-disable-line
 
   useEffect(() => {
     const sorted = [...citiesData].sort((a, b) =>
@@ -15,22 +19,26 @@ const CitySelector = ({ isCitySelectorActive, closeCitySelector }) => {
 
   useEffect(() => {
     if (isCitySelectorActive) {
-      // Отключаем прокрутку заднего фона
       document.body.style.overflow = 'hidden';
     } else {
-      // Включаем прокрутку заднего фона
       document.body.style.overflow = 'auto';
     }
 
-    // Очистка эффекта при размонтировании компонента
     return () => {
       document.body.style.overflow = 'auto';
     };
   }, [isCitySelectorActive]);
 
   const handleCityClick = (city) => {
-    alert(`Вы выбрали город ${city.name}. Широта ${city.lat}. Долгота ${city.lon}`);
+    const coordinates = {
+      "lon": city.lon,
+      "lat": city.lat
+    }
+
+    setCityName(city.name);
+    setInitialPosition(coordinates);
     closeCitySelector();
+    window.location.reload();
   };
 
   const handleSearchChange = (event) => {
