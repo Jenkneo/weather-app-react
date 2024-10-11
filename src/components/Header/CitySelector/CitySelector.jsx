@@ -13,6 +13,21 @@ const CitySelector = ({ isCitySelectorActive, closeCitySelector }) => {
     setSortedCities(sorted);
   }, []);
 
+  useEffect(() => {
+    if (isCitySelectorActive) {
+      // Отключаем прокрутку заднего фона
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Включаем прокрутку заднего фона
+      document.body.style.overflow = 'auto';
+    }
+
+    // Очистка эффекта при размонтировании компонента
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isCitySelectorActive]);
+
   const handleCityClick = (city) => {
     alert(`Вы выбрали город ${city.name}. Широта ${city.lat}. Долгота ${city.lon}`);
     closeCitySelector();
