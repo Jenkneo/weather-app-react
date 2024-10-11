@@ -5,7 +5,6 @@ import L from 'leaflet';
 import { getAirPollutionData } from '../services/airPollution';
 import { getColor, getHealthRecommendations } from '../hooks/airQualityRecommendations';
 
-// Основной контейнер для карты
 const StyledMapContainer = styled.div`
   padding: 20px;
   margin-bottom: 60px;
