@@ -6,7 +6,7 @@ import Home from './pages/Home/Home';
 import Map from './pages/Map';
 import PollutionInfo from './pages/PollutionInfo';
 import Forecast from './pages/Forecast';
-import Notifications from './pages/Notifications';
+import Notifications from './pages/Notifications/Notifications';
 import SmokePrediction from './pages/SmokePrediction';
 import SafeLevels from './pages/SafeLevels';
 import News from './pages/News';
