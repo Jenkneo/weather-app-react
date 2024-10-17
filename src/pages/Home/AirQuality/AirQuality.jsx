@@ -21,17 +21,33 @@ const AirQuality = ({ airData }) => {
   }, [position]);
 
   if (!airData || !airData.list || airData.list.length === 0) {
-    return <p className="description">Данные о качестве воздуха недоступны.</p>;
+    return (
+      <div className="air-quality-widget">
+      <div className="location-info">
+        <i className="fa-solid fa-location-arrow" />
+        <span> {city}</span>
+        <p>Сейчас {getCurrentTime()}</p>
+      </div>
+      <div className="air-quality-info">
+        <div className='loading-container'>
+          <div className="loading-container-icon">
+            <i className="fa fa-spinner fa-spin" />
+          </div>
+          <p className='loading-text'>Данные о качестве воздуха загружаются...</p>
+        </div>
+      </div>
+    </div>
+    )
   }
 
   function getAirQualityEmoji(pollutant, value) {
     const thresholds = {
-        CO: { green: 10000, orange: 15000 },   // в µg/m³
-        NO2: { green: 40, orange: 100 },        // в µg/m³
-        O3: { green: 120, orange: 180 },        // в µg/m³
-        SO2: { green: 125, orange: 200 },       // в µg/m³
-        PM10: { green: 50, orange: 100 },       // в µg/m³
-        PM25: { green: 25, orange: 50 }         // в µg/m³
+        CO: { green: 10000, orange: 15000 },
+        NO2: { green: 40, orange: 100 },
+        O3: { green: 120, orange: 180 },
+        SO2: { green: 125, orange: 200 },
+        PM10: { green: 50, orange: 100 },
+        PM25: { green: 25, orange: 50 }
     };
 
     if (!thresholds[pollutant]) {
