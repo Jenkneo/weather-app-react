@@ -6,6 +6,28 @@
   --mobile-menu-background-color: rgba(255, 255, 255, 0.95);
   --link-active-color: rgb(32, 174, 230);
 }
+.loading-container {
+  margin-top: 130px;
+  margin-bottom: 130px;
+}
+
+.loading-container-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 40px;
+  color: var(--widget-text-color);
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: 68px;
+}
+
+.loading-text {
+  text-align: center;
+  font-size: 20px;
+  color: white;
+}
 
 .air-quality-widget {
   margin: 0 auto;
