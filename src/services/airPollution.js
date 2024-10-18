@@ -1,16 +1,14 @@
-import axios from 'axios';
+import axios from 'axios'; 
 
-const isDevMode = process.env.NODE_ENV === 'development'
+const isDevMode = process.env.NODE_ENV === 'development';
 
-const API_KEY = '7eef441a87868e8991b28fec50f95b7e'; // Замените на ваш API-ключ
-const BASE_URL = (isDevMode ? 'http' : 'https') + `://api.openweathermap.org/data/2.5/air_pollution`;
+//сюда надо указать то, что высралось при поднятии бека (uvicorn main:app --reload) либо уже прод
+const BASE_URL = (isDevMode ? 'http' : 'https') + '://127.0.0.1:8000/api'; // super-unicorn-secondly.ngrok-free.app
 
-// Функция для получения данных о загрязнении воздуха
+//отсюда мы идем на эндпоинт бэка get-pollution (текущее загрязнение)
 export const getAirPollutionData = async (lat, lon) => {
   try {
-    //отправляем гет на сервер
-    const response = await axios.get(`${BASE_URL}?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
-    //получаем данные
+    const response = await axios.get(`${BASE_URL}/get-pollution?lat=${lat}&lon=${lon}`);
     return response.data;
   } catch (error) {
     console.error('Ошибка при получении данных о загрязнении воздуха:', error);
@@ -18,12 +16,10 @@ export const getAirPollutionData = async (lat, lon) => {
   }
 };
 
-// Функция для получения прогноза загрязнения воздуха
+//отсюда мы идем на эндпоинт бэка get-forecast (прогноз на 5 суток)
 export const getAirPollutionForecast = async (lat, lon) => {
   try {
-    //отправляем гет на сервер
-    const response = await axios.get(`${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
-    //получаем данные
+    const response = await axios.get(`${BASE_URL}/get-forecast?lat=${lat}&lon=${lon}`);
     return response.data;
   } catch (error) {
     console.error('Ошибка при получении прогноза загрязнения воздуха:', error);
