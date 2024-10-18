@@ -3,9 +3,13 @@ import { NavLink } from 'react-router-dom';
 import './Header.css';
 import useGeolocation from '../../hooks/useGeolocation';
 import { getCityName } from '../../services/geocoding';
+import MobileMenu from './MobileMenu/MobileMenu';
+import CitySelector from './CitySelector/CitySelector';
+// import logo from './logo.png';
 
 const Header = () => {
   const [isMobileNavActive, setIsMobileNavActive] = useState(false);
+  const [isCitySelectorActive, setIsCitySelectorActive] = useState(false);
 
   const { position } = useGeolocation();
   const [city, setCity] = useState('Определение...');
@@ -18,6 +22,14 @@ const Header = () => {
   // Обработчик закрытия мобильного меню
   const closeMobileNav = () => {
     setIsMobileNavActive(false);
+  };
+
+  const toggleCitySelector = () => {
+    setIsCitySelectorActive(!isCitySelectorActive);
+  };
+
+  const closeCitySelector = () => {
+    setIsCitySelectorActive(false);
   };
 
   // Обработчик изменения размера окна
@@ -49,7 +61,8 @@ const Header = () => {
 
   // Обработчик кнопки геолокации
   const handleGeolocation = () => {
-    alert('Пока что ручной ввод города не поддерживается...');
+    toggleCitySelector();
+    // alert('Пока что ручной ввод города не поддерживается...');
   };
 
   return (
@@ -58,6 +71,7 @@ const Header = () => {
         <div className="header-container">
           <div className="logo">
             <NavLink activeClassName="active" className="nav-link" to="/">
+              {/* <img className='header-logo' src={logo} alt='Logo' /> */}
               <i className="fa-solid fa-cloud"></i>
             </NavLink>
           </div>
@@ -101,31 +115,10 @@ const Header = () => {
         </div>
       </header>
 
-      <nav className={`mobile-nav ${isMobileNavActive ? 'active' : ''}`}>
-        <button className="close-menu" aria-label="Закрыть меню" onClick={closeMobileNav}>
-          <i className="fas fa-times"></i>
-        </button>
-        <ul className="nav-list">
-        <li>
-            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/">Главная</NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/forecast">Прогноз</NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/map">Карта</NavLink>
-          </li>
-          {/* <li>
-            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/news">Новости</NavLink>
-          </li> */}
-          <li>
-            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/notifications">Уведомления</NavLink>
-          </li>
-          <li>
-            <NavLink activeClassName="active" onClick={closeMobileNav} className="nav-link" to="/safe-levels">Нормы</NavLink>
-          </li>
-        </ul>
-      </nav>
+      <MobileMenu isMobileNavActive={isMobileNavActive} closeMobileNav={closeMobileNav} />
+    
+      <CitySelector isCitySelectorActive={isCitySelectorActive} closeCitySelector={closeCitySelector} />
+    
     </>
   );
 };

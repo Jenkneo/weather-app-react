@@ -7,8 +7,6 @@
   --link-active-color: rgb(32, 174, 230);
 }
 
-
-/* Стили заголовка */
 .header {
   background-color: var(--main-bg-color);
   color: var(--text-color);
@@ -17,6 +15,11 @@
   top: 0;
   border-bottom: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-logo{
+  width: 20px;
+  height: 20px;
 }
 
 .header-container {
@@ -89,64 +92,6 @@
 
 .nav-list li a:hover {
   text-decoration: underline;
-}
-
-/* Стили для мобильной навигации */
-.mobile-nav {
-  position: fixed; /* Фиксируем навигацию */
-  top: 0; /* Выровнено по верхнему краю */
-  left: 0; /* Выровнено по левому краю */
-  width: 100%; /* Занимает 100% ширины */
-  height: 100%; /* Занимает 100% высоты */
-  background-color: var(--mobile-menu-background-color); /* Полупрозрачный зеленый фон */
-  transform: translateX(-100%); /* Скрываем меню с помощью трансформации */
-  transition: transform 0.3s ease; /* Плавный переход для открытия/закрытия */
-  z-index: 999; /* Поверх других элементов */
-  display: flex; /* Используем flexbox для центрирования */
-  flex-direction: column; /* Вертикальная ориентация элементов */
-  align-items: center; /* Центрируем элементы по горизонтали */
-  justify-content: center; /* Центрируем элементы по вертикали */
-}
-
-.mobile-nav.active {
-  transform: translateX(0); /* Показываем меню при активации */
-}
-
-.mobile-nav .nav-list {
-  flex-direction: column; /* Вертикальное отображение ссылок на мобильной версии */
-  width: 100%; /* Занимает 100% ширины */
-  text-align: center; /* Центрируем текст */
-}
-
-.mobile-nav .nav-list li {
-  margin: 20px 0; /* Отступы между пунктами меню */
-  font-size: var(--mobile-nav-link-font-size); /* Увеличиваем размер шрифта для мобильного меню */
-}
-
-.mobile-nav .nav-list li a {
-  color: var(--text-color);
-  text-decoration: none;
-  font-size: var(--mobile-nav-link-font-size); /* Увеличиваем размер шрифта для мобильного меню */
-}
-
-.mobile-nav .nav-list li a:hover {
-  text-decoration: underline;
-}
-
-/* Стили для кнопки закрытия меню */
-.close-menu {
-  background: none; /* Без фона */
-  border: none; /* Без границы */
-  color: var(--text-color); /* Цвет текста */
-  font-size: 30px; /* Размер шрифта */
-  cursor: pointer; /* Указатель на курсор */
-  position: absolute; /* Позиционирование */
-  top: 20px; /* Отступ сверху */
-  right: 20px; /* Отступ справа */
-}
-
-.close-menu:focus {
-  outline: none; /* Убираем рамку при фокусировке */
 }
 
 /* Стили для кнопки мобильного меню */

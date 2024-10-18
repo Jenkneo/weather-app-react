@@ -1,0 +1,34 @@
+.notifications-container {
+  text-align: center;
+  min-height: 100vh;
+  padding: 20px;
+  margin-bottom: 60px;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.notifications-container p {
+  margin-bottom: 20px;
+}
+
+.notifications-title {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}

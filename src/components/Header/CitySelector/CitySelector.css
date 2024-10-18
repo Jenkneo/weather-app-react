@@ -1,0 +1,99 @@
+/* Основной контейнер меню */
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--mobile-menu-background-color, #fff); 
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1001; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Предотвращаем прокрутку при закрытом меню */
+}
+
+/* Активное состояние меню */
+.mobile-nav.active {
+  transform: translateY(0);
+}
+
+/* Контейнер списка городов */
+.city-list-container {
+  width: 90%;
+  max-width: 1000px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  overflow-y: auto; /* Позволяет прокручивать список при переполнении */
+  max-height: 80%; /* Ограничиваем высоту для предотвращения выхода за пределы экрана */
+}
+
+/* Заголовок */
+.city-list-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Поле поиска */
+.city-list-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Список городов */
+.city-list-container ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Элементы списка */
+.city-list-container li {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  text-align: center;
+}
+
+/* Стили при наведении */
+.city-list-container li:hover {
+  background-color: #e6f7ff;
+  transform: scale(1.02);
+}
+
+/* Кнопка закрытия меню */
+.close-menu {
+  background: none;
+  border: none;
+  color: var(--text-color, #000);
+  font-size: 30px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.close-menu:focus {
+  outline: none;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 600px) {
+  .city-list-container ul {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}

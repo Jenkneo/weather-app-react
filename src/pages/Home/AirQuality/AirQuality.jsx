@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import './AirQuality.css'; // Импортируем стили
+import './AirQuality.css';
+import useGeolocation from '../../../hooks/useGeolocation';
+import { getCityName } from '../../../services/geocoding';
 
 
 const AirQuality = ({ airData }) => {
+  const { position } = useGeolocation();
+  const [city, setCity] = useState('Определение...');
+  
+  useEffect(() => {
+    const fetchCity = async () => {
+      if (position.lat && position.lon) {
+        const cityName = await getCityName(position.lat, position.lon);
+        setCity(cityName);
+      }
+    };
+
+    fetchCity();
+  }, [position]);
+
   if (!airData || !airData.list || airData.list.length === 0) {
     return <p className="description">Данные о качестве воздуха недоступны.</p>;
   }
@@ -33,12 +49,12 @@ const AirQuality = ({ airData }) => {
     }
   }
 
-function getCurrentTime() {
-  const now = new Date();
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  return `${hours}:${minutes}`;
-}
+  function getCurrentTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
 
   const { aqi } = airData.list[0].main;
   const { co, no2, o3, so2, pm10, pm2_5 } = airData.list[0].components;
@@ -47,7 +63,7 @@ function getCurrentTime() {
     <div className="air-quality-widget">
       <div className="location-info">
         <i className="fa-solid fa-location-arrow" />
-        <span>Астрахань</span>
+        <span> {city}</span>
         <p>Сейчас {getCurrentTime()}</p>
       </div>
       <div className="air-quality-info">
